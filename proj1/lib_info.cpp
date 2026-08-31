@@ -45,25 +45,23 @@ int time_to_seconds(string str) {
 	return seconds;
 }
 
-string time_to_string(int num) {
-	int minutes = num / 60;
-	int seconds = num % 60;
-	string time = to_string(minutes) + ":" + to_string(seconds);
-	return time;
+int main(int argc, char *argv[]) {
+if (argc < 2) {
+  cerr << "usage: " << argv[0] << " <file>" << "\n";
+  return 1;
 }
 
-int main(int argc, char *argv[]) {
 string file = argv[1];
 map <string, Artist *> Artists;
 string line, title, time ,artist, album, genre;
 int track;
-map <string, Artist *>::iterator itr1; 
+map <string, Artist *>::iterator itr1;
 map <string, Album *>::iterator itr2;
 map <int, Song *>::iterator itr3;
 
 ifstream fin(file.c_str());
 
-if (!fin.is_open() || argc < 2) {
+if (!fin.is_open()) {
   cerr << "The file did not open." << "\n";
   return 1;
 }
@@ -124,15 +122,10 @@ for (itr1 = Artists.begin(); itr1 != Artists.end(); ++itr1) {
 			//printf("%16d. %s: %s", itr3->second->track, itr3->second->title.replace(title.begin(), title.end(), '_', ' '), time_to_string(itr3->second->time));
 			cout << "                " << itr3->second->track << ". " << itr3->second->title << ": " << itr3->second->time / 60 << ":" << setw(2) << setfill('0') << itr3->second->time % 60 << endl;
 		}
-
 	}
-
-
 } 
 
 fin.close();
-
-
 
 return 0;
 }
