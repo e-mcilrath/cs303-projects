@@ -1,8 +1,12 @@
 /* 
 Eric McIlrath & Abraham Rashdan
+emcilrat
+arashdan
 lib_info.cpp
 
-Inputs songs and sorts them. Then outputs them, sorted
+Inputs songs and sorts them. Then outputs them, sorted.
+
+Learned a lot about iterators and pointers.
 */
 #include <iostream>
 #include <string>
