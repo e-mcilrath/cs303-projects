@@ -1,3 +1,9 @@
+/* 
+Eric McIlrath & Abraham Rashdan
+lib_info.cpp
+
+Inputs songs and sorts them. Then outputs them, sorted
+*/
 #include <iostream>
 #include <string>
 #include <map>
@@ -33,6 +39,7 @@ class Artist {
     int nsongs;
 };
 
+// mm:ss -> seconds
 int time_to_seconds(string str) {
 	stringstream ss(str);
 	int seconds = 0;
@@ -46,22 +53,22 @@ int time_to_seconds(string str) {
 }
 
 int main(int argc, char *argv[]) {
-if (argc < 2) {
+if (argc < 2) { // Check right amount of args
   cerr << "usage: " << argv[0] << " <file>" << "\n";
   return 1;
 }
 
 string file = argv[1];
-map <string, Artist *> Artists;
+map <string, Artist *> Artists; // Main map
 string line, title, time ,artist, album, genre;
 int track;
 map <string, Artist *>::iterator itr1;
 map <string, Album *>::iterator itr2;
 map <int, Song *>::iterator itr3;
 
-ifstream fin(file.c_str());
+ifstream fin(file.c_str()); // Open file
 
-if (!fin.is_open()) {
+if (!fin.is_open()) { 
   cerr << "The file did not open." << "\n";
   return 1;
 }
