@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
     parse_command_line_options(argc, argv, mode, numeric);
 
     while (std::getline(std::cin, line)) {
-      //data.push_front(line);
+      data.push_front(line);
     }
     
     switch (mode) {
