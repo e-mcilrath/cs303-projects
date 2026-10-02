@@ -1,3 +1,14 @@
+/*
+Eric McIlrath
+emcilrat
+sb-analyze.cpp 
+
+Reads a Superball board on stdin and prints every scoreable component.
+
+TODO: rewrite header
+
+*/
+
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -10,6 +21,7 @@ using namespace std;
 class Superball {
   public:
     Superball(int argc, char **argv);
+    void analyze_superball();
     int r;
     int c;
     int mss;
@@ -77,14 +89,66 @@ Superball::Superball(int argc, char **argv)
   }
 }
 
+void Superball::analyze_superball() {
+  DisjointSetByRankWPC ds(r*c);
+
+  for(int i = 0; i < r; i++) {
+    for (int j = 0; j < c; j++) {
+      int cell = i*c + j;
+      if (board[cell] == '.' || board[cell] == '*') continue;  // skip empty
+      if (j+1 < c) {
+        if (board[cell] == board[cell+1]) { //if colors are the same 
+          int root_a = ds.Find(cell);       // root a
+          int root_b = ds.Find(cell+1);     // root b
+          if (root_a != root_b) {           // if roots are different, union
+            ds.Union(root_a, root_b);
+          }
+        }
+      }
+      if (i+1 < r) {
+        if (board[cell] == board[cell+c]) {  // if colors are the same
+          int root_a = ds.Find(cell);   // root a
+          int root_b = ds.Find(cell+c); // root b
+          if (root_a != root_b) {       // if the roots are different, union
+            ds.Union(root_a, root_b);
+          }
+        }
+      }
+    }
+  }
+  
+  vector<int> size(r*c, 0);   // vector of all cells
+  for (int cell = 0; cell < r*c; cell++) {
+    if (board[cell] == '.' || board[cell] == '*') continue;
+    size[ds.Find(cell)]++;
+  }
+
+  printf("Scoring sets:\n");
+  vector <bool> printed(r*c, false);
+  for(int i = 0; i < r; i++) {
+    for (int j = 0; j <c; j++) {
+      int cell = i*c + j;
+      if (board[cell] == '.' || board[cell] == '*') continue;
+      if (goals[cell] != 1) continue;
+
+      int root = ds.Find(cell); // find root
+      if (size[root] >= mss && !printed[root]) {
+        printf("  Size: %2d  Char: %c  Scoring Cell: %d,%d\n", size[root], board[cell], i, j);
+        printed[root] = true;
+      }
+    }
+  }
+
+
+}
+
+
 int main(int argc, char **argv)
 {
   Superball *s;
- 
+
   s = new Superball(argc, argv);
 
-  DisjointSetByRankWPC ds(s->r*s->c);
-
-  ds.Print();
-  
+ s->analyze_superball();
+ delete s;
 }

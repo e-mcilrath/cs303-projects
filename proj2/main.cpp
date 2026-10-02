@@ -38,8 +38,8 @@ void parse_command_line_options(int argc, char *argv[], int &mode, bool &numeric
                     mode = MODE_MERGE;
                 } else if (strcasecmp(optarg, "quick") == 0) {
                     mode = MODE_QUICK;
-		} else if (strcasecmp(optarg, "oblivious") == 0) {
-		  mode = MODE_OBLIVIOUS;
+		        } else if (strcasecmp(optarg, "oblivious") == 0) {
+		            mode = MODE_OBLIVIOUS;
                 } else {
                     usage(1);
                 }
@@ -68,9 +68,9 @@ int main(int argc, char *argv[]) {
     parse_command_line_options(argc, argv, mode, numeric);
 
     while (std::getline(std::cin, line)) {
-      //data.push_front(line);
+      data.push_front(line);
     }
-    /*
+    
     switch (mode) {
         case MODE_STL:
             stl_sort(data, numeric);
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
             quick_sort(data, numeric);
             break;
     }
-    */
+    
 
     for (Node * curr = data.head; curr != NULL; curr = curr->next) {
         if (numeric) {
