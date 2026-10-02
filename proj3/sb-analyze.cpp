@@ -143,12 +143,11 @@ void Superball::analyze_superball() {
 }
 
 
-int main(int argc, char **argv)
-{
-  Superball *s;
+int main(int argc, char **argv) {
+  Superball *s; 
 
   s = new Superball(argc, argv);
 
- s->analyze_superball();
- delete s;
+  s->analyze_superball();
+  delete s;
 }
